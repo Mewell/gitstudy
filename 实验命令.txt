@@ -1,0 +1,91 @@
+1/2.
+>en
+#config
+#enable secret 123
+#interface vlan 1
+#ip address 192.168.1.1 255.255.255.0
+#exit
+#line vty 0 4
+#password 110
+#login
+#exit
+
+3/4/5.
+#vlan 10
+#exit
+#interface range f0/5-10
+#switchport access vlan 10
+#exit
+#vlan 20
+#exit
+#interface range f0/11-15
+#switchport access vlan 20
+#exit
+#show vlan
+6.
+#show spanning-tree
+#show run interface f0/1
+#show run interface f0/2
+7.
+spanning-tree
+spanning-tree mode mstp
+spanning-tree mst configur
+interface 1 vlan 10
+interface 2 vlan 20
+exit
+spanning-tree mst 1 priority 4096
+spanning-tree mst 2 priority 8192
+
+1.
+vlan 10
+interface f0/3
+switchport access vlan 10
+show vlan
+2.
+interface aggregateport 1
+switchport mode trunk
+exit
+interface rang f0/1-2
+port-group 1
+show aggregateport 1 summary
+3.
+vlan 10
+interface f0/3
+switchport access vlan 10
+show vlan
+4.
+interface aggregateport 1
+switchport mode trunk
+exit
+interface rang f0/1-2
+port-group 1
+show aggregateport 1 summary
+5/6.
+no interface aggregateport 1
+no interface aggregateport 1
+
+生成树
+vlan 10
+interface f0/3
+switchport access vlan 10
+interface range f0/1-2
+switchport mode trunk
+show vlan
+
+spanning-tree
+spanning-tree mode rstp
+show spanning-tree
+spanning-tree priority 4096
+show spanning-tree interface f0/1
+show spanning-tree interface f0/2158/
+
+
+S3:
+vlan 10	10.1.1.1/24
+vlan 20	10.1.2.1/24
+vlan 30	10.1.3.1/26
+R2:
+三层功能
+10.1.3.253/30
+RIP/OSPF
+ip route 0.0.0.0	0.0.0.0	10.1.3.254

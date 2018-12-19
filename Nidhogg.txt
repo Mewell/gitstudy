@@ -1,0 +1,274 @@
+900
+	winpcap //windows packet capture 公共的网络访问系统
+	适用于 //网络及协议分析 网络监控 通信日志记录 网络入侵检测系统
+	
+	08dkSOZpW2BpKY5ZmDMypeOqzR5UaUuPkUfgoPJck9AhVdk7fujbbU83UIqWKbdnN1x1iWTkT-awhnY2hel+R4W0
+	
+	
+	socket
+	网络协议
+	铁路
+	Oracle
+	网络管理
+	毛概
+	
+	挑战杯
+	小程序
+	渗透
+	
+	
+	
+	
+工作区即目录
+版本库 .git（暂存区stage 主分支master 主分支的指针HEAD）	
+	git add a.txt 把a添加到暂存区
+	git commit 把暂存区的内容提交到当前分支
+	git checkout -- readme.txt 撤销工作区的修改
+	git reset HEAD readme.txt 把暂存区修改撤销
+	
+	git remote add origin git@github.com:Mewell/123.git
+	git push -u origin master
+	git push origin master
+	
+	git checkout -b dev 创建并转到dev分支
+	git checkout master	转到master分支
+	git merge dev	合并dev到主分支 合并dev分支到当前分支（master或用git branch查看当前分支）
+	git branch -d dev	删除dev分支
+	git branch 查看当前分支
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+相互轻蔑却又彼此来往，并一起自我作贱—这就是世上所谓“朋友”的真面目。-太宰治《人间失格》》
+弗洛伊德 奥地利心理学家
+爱·伦坡 19世纪美国诗人 
+弗罗斯特 20世纪美国诗人 《未选择的路》
+拜伦 19世纪英国浪漫主义诗人
+英国：
+	英格兰（伦敦 曼彻斯特 泰晤士河） 苏格兰 威尔士 北爱尔兰
+	莎士比亚 拜伦 雪莱 济慈 布莱克 华兹华斯 狄更斯 王尔德
+	披头士 罗比威廉姆斯 西域男孩* 滚石乐队 皇后
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

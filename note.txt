@@ -1,0 +1,64 @@
+
+it is an undeniable fact that trust can lay a solid foundation for commercial activities.
+	Therefore,building trust bewteen employers and emplyees plays a crucial role in boosting
+	a company's development.
+To begin with,as the saying goes,
+Next,
+In addition,
+Taking into account what we have discussed above,
+
+
+简化搜索区域 二维数组 每个元素为一个点
+
+
+RSA：
+1.取两个大素数p q 计算n=p*q
+2.随机去一个数e 是的e与（n）互素，e为公钥
+3.计算d=e^-1 mod (n) ，d为私钥
+4.	加密：c=m^e mod (n)
+	解密：m=c^d mod (n)
+
+EIGamal:
+1.取大素数p 本原元g{（g mode p）的阶为（p）} 随机数x //x,g<p
+2.y=g^x mod p
+3.公钥（y,g,p）私钥（x）
+4.加密 计算a=g^k mod p 计算b=y^k*M mod p 密文(a,b)
+5.解密 M=b/a^x mod p
+
+用于数字签名：
+1.取一个随机数k	//k与 p-1 互质
+2.计算a=g^k mod p
+3.求解M=x*a+k*b mod p-1 //M为被签的信息
+4.签名（a,b）
+5.验证 y^a*a^b=g^M mod p
+	
+DSA:
+1.大素数q	//2^159<q<2^160 
+  生成L位素数p=k*q+1	//L->[512,1024]且为64的倍数
+  选取随机数h 计算 g=h^(p-1)/q mod p	//1<h<p-1 g>1 g^q=1 mod p
+2.私钥 随机取一个数x	//1<=x<=q-1
+3.公钥 y=g^x mod p	
+签名：
+1.生成随机数k 
+2.r=(g^k mod p)mod q
+3.s=k^-1(H(m)+x*r) mod q
+4.签名(r,s)	
+
+(1) 输入：((g,p,q,y),M,(r ′,s ′ )) 
+(2)计算w=(s')−1mod qw=(s′)−1mod q 
+(3) 计算u1=[H(M')w]mod q,u2=(r')wmod qu1=[H(M′)w]mod q,u2=(r′)wmod q 
+(4)计算v=[(gu1yu2)mod p]mod qv=[(gu1yu2)mod p]mod q 
+正确性证明： 
+验证：如 v=r ′则签名有效
+
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+

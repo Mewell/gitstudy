@@ -1,0 +1,165 @@
+
+enable 进入特权模式
+config 进入配置模式
+按 end 回到#
+exit 回到上一级
+show vlan 查看vlan信息
+
+
+配置模式下：enable secret/password 110 //配置进入特权模式的密码为110
+
+配置交换机VLAN
+Switch(config)#vlan 10
+Switch(config-vlan)#exit
+Switch(config)#interface f0/1
+Switch(config-if)#switchport mode access //定义端口模式 可有可无
+Switch(config-if)#switchport access vlan 10//把端口f0/1加入到vlan 10
+
+Switch(config)#interface range f0/1-10
+Switch(config-if-range)#switchport access vlan 10//把端口f0/1-10加入到vlan 10
+
+配置交换机管理IP
+Switch(config)#interface vlan 1
+Switch(config-if)#ip address 192.168.1.1 255.255.255.0
+Switch(config-if)#no shutdown	//配置好端口后 要正常通信 需要no shutdown 命令
+Switch(config-if)#exit
+
+S1(config)#interface vlan 1
+S1(config-if)#ip address 192.168.1.1 255.255.255.0
+S1(config-if)#exit
+S1(config)#line vty 0 4
+S1(config-line)#password 110
+S1(config-line)#login
+S1(config-line)#exit
+S1(config)#
+
+配置网关地址
+Switch(config)#ip default-gateway 192.168.1.100
+
+配置trunk
+1.进入接口
+2.switchport trunk encapsulation dot1q
+3.switchport mode trunk
+4.switchport trunk allowed vlan all //trunk允许所有vlan流量通过
+
+查看STP协议
+S1#show spanning-tree 一般为默认开启
+S1#spanning-tree	若没开启输入此命令进行开启
+S1#show run int f0/1 查看f0/1状态
+S1#show run int f0/1 查看f0/2状态
+
+配置MSTP 协议
+spanning-tree
+spanning-tree mode mstp
+spanning-tree mst configur
+instance 1 vlan 10
+instance 2 vlan 20
+exit
+spanning-tree mst 1 priority 4096
+spanning-tree mst 2 priority 8192
+
+端口聚合（Aggregate-port）又称链路聚合，是指两台交换机之间在物理上将多个端口连接起来，
+将多条链路聚合成一条逻辑链路。从而增大链路带宽，解决交换网络中因带宽引起的网络瓶颈问题。
+多条物理链路之间能够相互冗余备份，其中任意一条链路断开，不会影响其他链路的正常转发数据。
+
+生成树协议（spanning-tree），作用是在交换网络中提供冗余备份链路，并且解决交换网络中的环路问题。
+
+生成树协议是利用SPA算法（生成树算法）在存在交换环路的网络中生成一个没有环路的树形网络。
+	运用该算法将交换网络冗余的备份链路逻辑上断开，当主要链路出现故障时，
+	能够自动的切换到备份链路，保证数据的正常转发。
+	
+生成树协议目前常见的版本有STP（生成树协议IEEE802.1d）、
+	RSTP(快速生成树协议IEEE802.1w)、MSTP（多生成树协议IEEE802.1s）。
+	
+生成树协议的特点是收敛时间长。当主要链路出现故障以后，到切换到备份链路需要50秒的时间。
+
+快速生成树协议（RSTP）在生成树协议的基础上增加了两种端口角色：
+	替换端口（alternate Port）和备份端口（backup Port），
+	分别做为根端口（root Port）和指定端口（designed Port）的冗余端口。
+	当根端口或指定端口出现故障时，冗余端口不需要经过50秒的收敛时间，
+	可以直接切换到替换端口或备份端口。从而实现RSTP协议小于1秒的快速收敛。
+
+1.两台交换机都配置完端口聚合后，再将两台交换机连接起来。
+2.如果先连线再配置会造成广播风暴，影响交换机的正常工作。
+
+
+配置聚合端口
+SwitchA（config）#interface aggregateport 1          创建聚合接口AG1
+SwitchA（config-if）#switchport mode trunk           配置AG模式为trunk
+SwitchA（config-if）#exit
+SwitchA（config）# interface range f0/1-2             进入端口1和 2
+SwitchA（config-if-range）#port-group 1         配置端口1和 2属于AG1
+SwitchA#show aggregateport 1 summary        查看端口聚合组1的信息
+AG最大支持端口数为8个，当前vlan模式为trunk，组成员有f0/1,f0/2。
+
+删除聚合端口
+SwitchA（config）#no interface aggregateport 1
+SwitchB（config）#no interface aggregateport 1
+
+注意事项：
+1)只有同类型端口才能聚合为一个AG端口。
+2)所有物理端口必须属于同一个vlan。
+3)在锐捷交换机上最多支持8个物理端口聚合为一个AG。
+4)在锐捷交换机上最多支持6组聚合端口。
+
+配置快速生成树协议
+
+SwitchA（config）#spanning-tree                  开启生成树协议
+SwitchA（config）#spanning-tree mode rstp        指定生成树协议的类型为RSTP
+SwitchA#show spanning-tree
+SwitchA（config）#spanning-tree priority 4096      ！设置交换机优先级为4096
+
+注意：
+SysStpStatus: Enabled         生成树协议运行状态，disable为关闭状态
+Priority：32768                       查看交换机的优先级
+RootCost：200000                      交换机到达根交换机的开销
+RootPort：Fa0/1                       查看交换机上的根端口
+SwitchB#show spanning-tree
+SysStpStatus: Enabled         ！生成树协议运行状态，disable为关闭状态
+Priority：32768                       ！查看交换机的优先级
+RootCost：0              ！交换机到达根交换机的开销,0代表本交换机为根
+RootPort：0                 ！查看交换机上的根端口，0代表本交换机为根
+
+
+通过查看两台交换机的生成树信息发现，switchB为根交换机，switchA Fa0/1为根端口
+4．	设置交换机的优先级，指定switchA为根交换机。
+
+
+验证测试：
+1）验证交换机switchB的端口1和端口2的状态
+SwitchB#show spanning-tree interface fastEthernet 0/1！显示SwitchB端口fastEthernet 0/1的状态
+注意：
+Portstate：forwarding   !SwitchB的端口fastEthernet 0/1处于转发(forwarding)状态PortRole：rootport      ！查看端口角色为根端口
+SwitchB#show spanning-tree interface fastEthernet 0/2！显示SwitchB端口fastEthernet 0/2的状态
+注意：
+Portstate：discarding   !SwitchB的端口fastEthernet 0/2处于阻塞(discarding)状态
+PortRole：alternateport  ！SwitchB的Fa0/2端口为根端口的替换端口
+
+5、如果SwitchA与SwitchB的端口F0/1之间的链路down掉，验证交换机SwitchB的端口2的状态，并观察状态转换时间。
+SwitchB#show spanning-tree interface fastEthernet 0/2
+Portstate：forwarding
+！SwitchB的端口fastEthernet 0/2从阻塞（discarding）状态转换到转发（forwarding）状态，这说明生成树协议此时启用了原先处于阻塞状态的冗余链路。
+！状态转换时间大约2秒
+PortRole：rootport                 ！查看端口角色为根端口
+
+6、验证PCA与PCB仍能互相ping通，并观察ping的丢包情况。
+7、注意事项：
+1）锐捷交换机缺省是关闭spanning-tree的，如果网络在物理上存在环路，则必须手工开启spanning-tree。
+2）锐捷全系列的交换机默认为MSTP协议，在配置时注意生成树协议的版本。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
